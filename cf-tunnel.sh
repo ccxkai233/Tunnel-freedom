@@ -33,21 +33,6 @@ SERVICE_EXISTS=false
 if sudo systemctl list-units --full --all | grep -q 'cloudflared-tunnel.service'; then
     SERVICE_EXISTS=true
     echo -e "${YELLOW}已检测到 cloudflared-tunnel systemd 服务${NC}"
-
-    # 显示之前的本地地址与公网地址
-    if [[ -f "$SERVICE_PATH" ]]; then
-        OLD_ADDR=$(grep -oP '(?<=ExecStart=/usr/bin/cloudflared tunnel --url ).*' "$SERVICE_PATH" 2>/dev/null || echo "")
-        if [[ -n "$OLD_ADDR" ]]; then
-            echo -e "${GREEN}之前配置的本地地址：$OLD_ADDR${NC}"
-        fi
-    fi
-    if [[ -f "$LOG_PATH" ]]; then
-        OLD_DOMAIN=$(grep -oP 'https://[a-zA-Z0-9-]+\.trycloudflare\.com' "$LOG_PATH" 2>/dev/null | tail -n1 || echo "")
-        if [[ -n "$OLD_DOMAIN" ]]; then
-            echo -e "${GREEN}最近一次获取的公网地址：$OLD_DOMAIN${NC}"
-        fi
-    fi
-
     read -p "是否要卸载旧服务？(y/n): " UNINSTALL
     if [[ "$UNINSTALL" == "y" || "$UNINSTALL" == "Y" ]]; then
         echo -e "${BLUE}正在卸载旧服务...${NC}"
@@ -72,9 +57,6 @@ read -p "请输入 1 或 2: " MODE
 
 # 输入内网地址
 read -p "请输入要穿透的本地地址（例如 127.0.0.1:8080）: " LOCAL_ADDR
-
-echo -e "${YELLOW}本地地址: ${NC}$LOCAL_ADDR"
-echo -e "${YELLOW}公网地址将在后续日志中检测获取...${NC}"
 
 if [[ "$MODE" == "1" ]]; then
     echo -e "${BLUE}正在前台运行 cloudflared...${NC}"
