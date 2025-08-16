@@ -28,6 +28,14 @@ chmod +x cf-tunnel.sh
 2. 输入本地服务地址（如 `127.0.0.1:8080`）。  
 3. 稍等片刻将显示公网可访问的临时域名（形如 `xxxx.trycloudflare.com`）。  
 
+## 一条命令快速运行
+
+无需克隆仓库，可以直接执行远程脚本：
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/ccxkai233/Tunnel-freedom/main/cf-tunnel.sh)
+```
+
 ## 注意事项
 
 - 需预先通过 apt 安装 cloudflared（脚本已给出安装命令）。  
