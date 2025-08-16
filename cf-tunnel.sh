@@ -58,6 +58,9 @@ read -p "请输入 1 或 2: " MODE
 # 输入内网地址
 read -p "请输入要穿透的本地地址（例如 127.0.0.1:8080）: " LOCAL_ADDR
 
+echo -e "${YELLOW}本地地址: ${NC}$LOCAL_ADDR"
+echo -e "${YELLOW}公网地址将在后续日志中检测获取...${NC}"
+
 if [[ "$MODE" == "1" ]]; then
     echo -e "${BLUE}正在前台运行 cloudflared...${NC}"
 
